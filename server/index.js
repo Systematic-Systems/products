@@ -51,6 +51,19 @@ app.get('/products/:product_id/styles', (req, res) => {
   });
 })
 
+app.get('/products/:product_id/related', (req, res) => {
+  let id = req.params.product_id;
+  db.query(`SELECT related_product_id FROM related WHERE current_product_id=${id}`)
+  .then(relatedItems => {
+    let result = relatedItems.map(item => item.related_product_id);
+    res.send(result);
+  })
+  .catch(err => {
+    console.log('unable to get product related items', err);
+    res.send(err);
+  })
+});
+
 app.listen(port, () => {
   console.log(`app listening at http://localhost:${port}`);
 })
