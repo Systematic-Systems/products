@@ -34,12 +34,13 @@ app.get('/products/:product_id/styles', (req, res) => {
   .then(async styles => {
     let allStyles = [];
     for await (style of styles) {
-      await db.query(`SELECT thumbnail_url, url FROM photos WHERE styleid=${style.id}`)
-      .then(photos => {
+      await db.task('get-everything', async t => {
+        const skus = await db.query(`SELECT id, size, quantity FROM skus WHERE styleid=${style.id}`);
+        const photos = await db.query(`SELECT thumbnail_url, url FROM photos WHERE styleid=${style.id}`);
+        style.skus = skus;
         style.photos = photos;
         allStyles.push(style);
       })
-      .catch(err => console.log(`unable to get photos for ${style.id}`, err))
     }
     return allStyles;
   })
