@@ -1,15 +1,16 @@
 const express = require('express');
+const url = require('url');
 const db = require('./db/index.js');
 const app = express();
 const port = 3000;
 
-// app.get('/products/:page?/:count?', (req, res) => {
-//   let page = req.params.page || 1;
-//   let count = req.params.count || 5;
-//   db.query(`SELECT * FROM product ORDER BY id ASC LIMIT ${count} OFFSET ${(count * page) - count}`)
-//   .then(response => res.send(response))
-//   .catch(err => console.log('error getting products'))
-// })
+app.get('/products', (req, res) => {
+  let page = req.query.page || 1;
+  let count = req.query.count || 5;
+  db.query(`SELECT * FROM product ORDER BY id ASC LIMIT ${count} OFFSET ${(count * page) - count}`)
+  .then(response => res.send(response))
+  .catch(err => console.log('error getting products'))
+})
 
 app.get('/products/:product_id', (req, res) => {
   let id = req.params.product_id;
