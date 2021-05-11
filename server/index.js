@@ -9,7 +9,10 @@ app.get('/products', (req, res) => {
   let count = req.query.count || 5;
   db.query(`SELECT * FROM product ORDER BY id ASC LIMIT ${count} OFFSET ${(count * page) - count}`)
   .then(response => res.send(response))
-  .catch(err => console.log('error getting products'))
+  .catch(err => {
+    console.log('error getting products');
+    res.send(err);
+  })
 })
 
 app.get('/products/:product_id', (req, res) => {
