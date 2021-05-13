@@ -1,0 +1,6 @@
+node_modules
+data/
+server/db/imports
+Docker/db/*.env
+!example.env
+*.DS_Store

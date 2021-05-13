@@ -1,0 +1,17 @@
+services:
+  db:
+    container_name: db
+    image: postgres
+    env_file:
+      - ./Docker/db/db.env
+    ports:
+      - "5432:5432"
+  server:
+    container_name: server
+    build: ./server
+    env_file:
+      - ./Docker/db/db.env
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"

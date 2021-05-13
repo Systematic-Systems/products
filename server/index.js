@@ -1,5 +1,4 @@
 const express = require('express');
-const url = require('url');
 const db = require('./db/index.js');
 const app = express();
 const port = 3000;

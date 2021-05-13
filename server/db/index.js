@@ -1,7 +1,8 @@
 const pgp = require('pg-promise')();
-const db = pgp('postgres:///products');
-// const fs = require('fs');
-// const csv = require('csv-parser');
+const dbUser = process.env.POSTGRES_USER;
+const dbPw = process.env.POSTGRES_PASSWORD;
+const dbPath = process.env.POSTGRES_DB;
+const db = pgp(`postgres://${dbUser}:${dbPw}@db:5432/${dbPath}`);
 
 // TESTING SERVER IS ONLINE
 db.one('Select $1 AS value', 123)
