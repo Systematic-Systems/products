@@ -1,0 +1,16 @@
+LOAD CSV
+  FROM 'data/styles.csv'
+    HAVING FIELDS
+    (
+      id, productId, name, sale_price, original_price, default_style
+    )
+  INTO pgsql:///products?styles
+    TARGET COLUMNS
+    (
+      id, productId, name, sale_price, original_price, default_style
+    )
+  WITH skip header = 1,
+    fields terminated by ',',
+    fields escaped by '\'',
+    fields escaped by backslash-quote
+  SET work_mem to '32 MB', maintenance_work_mem to '64 MB';

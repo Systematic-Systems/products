@@ -1,0 +1,16 @@
+LOAD CSV
+  FROM 'data/related.csv'
+    HAVING FIELDS
+    (
+      id, current_product_id, related_product_id
+    )
+  INTO pgsql:///products?related
+    TARGET COLUMNS
+    (
+      id, current_product_id, related_product_id
+    )
+  WITH skip header = 1,
+    fields terminated by ',',
+    fields escaped by '\'',
+    fields escaped by backslash-quote
+  SET work_mem to '32 MB', maintenance_work_mem to '64 MB';

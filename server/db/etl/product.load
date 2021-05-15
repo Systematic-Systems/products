@@ -1,0 +1,16 @@
+LOAD CSV
+  FROM 'data/product.csv'
+    HAVING FIELDS
+    (
+      id, name, slogan, description, category, default_price
+    )
+  INTO pgsql:///products?product
+    TARGET COLUMNS
+    (
+      id, name, slogan, description, category, default_price
+    )
+  WITH skip header = 1,
+    fields terminated by ',',
+    fields escaped by '\'',
+    fields escaped by backslash-quote
+  SET work_mem to '32 MB', maintenance_work_mem to '64 MB';
