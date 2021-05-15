@@ -3,6 +3,8 @@ const db = require('./db/index.js');
 const app = express();
 const port = 3000;
 
+app.use(express.static('public'));
+
 app.get('/products', (req, res) => {
   let page = req.query.page || 1;
   let count = req.query.count || 5;
